@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.12.0'
+}
+
+group = 'com.PavelChuu'
+version = '1.0-SNAPSHOT'
+
+allure{
+    report{
+        version.set("2.34.0")
+    }
+    adapter{
+        aspectjWeaver.set(true)
+        frameworks {
+            junit5{
+                adapterVersion.set("2.29.1")
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.33.0'
+    implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.33.0'
+
+}
+
+test {
+    useJUnitPlatform()
+}
