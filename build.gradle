@@ -29,7 +29,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.33.0'
     implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.33.0'
-
+    implementation 'com.codeborne:selenide:7.9.3'
+    implementation 'io.qameta.allure:allure-selenide:2.29.1'
+    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.33.0'
 }
 
 test {

@@ -1,29 +1,40 @@
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class ElementsTest {
+
     static WebDriver driver;
     @BeforeAll
     public static void setUp() {
-        driver = new ChromeDriver();
-    }
+        Configuration.browser = "firefox";}
+    @AfterEach
+    void tearDown() {
+        Selenide.closeWebDriver();}
 
     @Test
     public void TextBoxTest() {
-        driver.get("https://demoqa.com/text-box");
-        driver.findElement(By.id("userName")).click();
-        driver.findElement(By.id("userName")).sendKeys("UserName");
-        driver.findElement(By.id("userEmail")).click();
-        driver.findElement(By.id("userEmail")).sendKeys("UserEmail@gmail.com");
-        driver.findElement(By.id("currentAddress")).click();
-        driver.findElement(By.id("currentAddress")).sendKeys("CurrentAddress");
-        driver.findElement(By.id("permanentAddress")).click();
-        driver.findElement(By.id("permanentAddress")).sendKeys("PermanentAddress");
-        driver.findElement(By.id("submit")).click();
+        SelenideLogger.addListener("allure", new AllureSelenide());
+        open("https://demoqa.com/text-box");
+        $("#userName").click();
+        $("#userName").val("UserName");
+
+        $("#userEmail").click();
+        $("#userEmail").val("UserEmail@gmail.com");
+
+        $("#currentAddress").click();
+        $("#currentAddress").val("currentAddress");
+
+        $("#permanentAddress").click();
+        $("#permanentAddress").val("permanentAddress");
+
+        $("#submit").click();
     }
 }
