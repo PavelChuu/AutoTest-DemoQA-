@@ -6,15 +6,15 @@ plugins {
 group = 'com.PavelChuu'
 version = '1.0-SNAPSHOT'
 
-allure{
-    report{
-        version.set("2.34.0")
+allure {
+    report {
+        version.set("2.29.0")
     }
-    adapter{
+    adapter {
         aspectjWeaver.set(true)
         frameworks {
-            junit5{
-                adapterVersion.set("2.29.1")
+            junit5 {
+                adapterVersion.set("2.29.0")
             }
         }
     }
@@ -25,15 +25,15 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.seleniumhq.selenium:selenium-java:4.33.0'
-    implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.33.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.13.1'
+    testImplementation 'io.qameta.allure:allure-junit5:2.29.0'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.33.0'
     implementation 'com.codeborne:selenide:7.9.3'
-    implementation 'io.qameta.allure:allure-selenide:2.29.1'
     implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.33.0'
+    implementation 'org.seleniumhq.selenium:selenium-firefox-driver:4.33.0'
+    implementation 'io.qameta.allure:allure-selenide:2.29.0'
 }
-
-test {
-    useJUnitPlatform()
-}
+    test {
+        useJUnitPlatform()
+    }
