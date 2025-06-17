@@ -15,6 +15,7 @@ public class ElementsTest {
     public void setUp() {
         Configuration.browser = "firefox";
         Configuration.timeout = 600000;
+        Configuration.holdBrowserOpen = true;
         open("https://demoqa.com");
         WebDriverRunner.getWebDriver().manage().window().maximize();
     }
@@ -40,12 +41,40 @@ public class ElementsTest {
         $("#submit").click();
     }
 
+    @DisplayName("Check Box Test")
     @Test
     public void CheckBoxTest() {
         SelenideLogger.addListener("allure", new AllureSelenide());
-        WebDriverRunner.getWebDriver().manage().window().maximize();
         Duration.ofSeconds(5);
-        $(".rct-options > .rct-option-expand-all > .rct-icon-expand-all").click();
-    }
 
-}
+        $("svg[viewBox='0 0 448 512']").click();
+        $("#item-1 > svg[viewBox='0 0 1024 1024']").click();
+        $("svg[class$='rct-icon-expand-all']").click();
+        $("svg[class$='rct-icon-collapse-all']").click();
+        $("svg[class$='rct-icon-expand-close']").click();
+        $("svg[class$='rct-icon-expand-close']").click();
+        for (int i = 0; i < 3; i++) {
+            $("label[for='tree-node-notes']").click();
+            $("label[for='tree-node-commands']").click();
+        }
+        $("svg[class$='rct-icon-expand-close']").click();
+        $("svg[class$='rct-icon-expand-close']").click();
+        for (int i = 0; i < 3; i++) {
+            $("label[for='tree-node-react']").click();
+            $("label[for='tree-node-angular']").click();
+            $("label[for='tree-node-veu']").click();
+        }
+        $("svg[class$='rct-icon-expand-close']").click();
+        for (int i = 0; i < 3; i++) {
+            $("label[for='tree-node-public']").click();
+            $("label[for='tree-node-private']").click();
+            $("label[for='tree-node-classified']").click();
+            $("label[for='tree-node-general']").click();
+        }
+        $("svg[class$='rct-icon-expand-close']").click();
+        for (int i = 0; i < 3; i++) {
+            $("label[for='tree-node-wordFile'] span[class='rct-title']").click();
+            $("label[for='tree-node-excelFile'] span[class='rct-title']").click();
+        }
+        }
+    }
