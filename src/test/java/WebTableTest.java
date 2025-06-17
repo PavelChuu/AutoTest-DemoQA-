@@ -91,6 +91,7 @@ public class WebTableTest {
         SelenideLogger.addListener("allure", new AllureSelenide());
         Faker faker = new Faker();
 
+        Selenide.executeJavaScript("window.scrollTo(0, document.body.scrollHeight)");
         //Узнаём максимальное число страниц и присваиваем это значение element
         SelenideElement element = $("span[class='-totalPages']");
         String max = element.getText();
@@ -106,6 +107,7 @@ public class WebTableTest {
     public void PrevAndNext() {
         SelenideLogger.addListener("allure", new AllureSelenide());
 
+        Selenide.executeJavaScript("window.scrollTo(0, document.body.scrollHeight)");
         $("div[class='-next'] button").click();
         $("div[class='-previous'] button").click();
         $("div[class='-next'] button").click();
