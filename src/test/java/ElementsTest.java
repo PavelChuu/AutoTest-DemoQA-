@@ -45,7 +45,6 @@ public class ElementsTest {
     @Test
     public void CheckBoxTest() {
         SelenideLogger.addListener("allure", new AllureSelenide());
-        Duration.ofSeconds(5);
 
         $("svg[viewBox='0 0 448 512']").click();
         $("#item-1 > svg[viewBox='0 0 1024 1024']").click();
@@ -76,5 +75,16 @@ public class ElementsTest {
             $("label[for='tree-node-wordFile'] span[class='rct-title']").click();
             $("label[for='tree-node-excelFile'] span[class='rct-title']").click();
         }
+        }
+
+        @DisplayName("Radio Button Test")
+        @Test
+    public void RadioButtonTest() {
+            SelenideLogger.addListener("allure", new AllureSelenide());
+
+            $("svg[viewBox='0 0 448 512']").click();
+            $("#item-2 > svg[viewBox='0 0 1024 1024']").click();
+            $("label[for='yesRadio']").click();
+            $("label[for='impressiveRadio']").click();
         }
     }
