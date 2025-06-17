@@ -6,7 +6,6 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.time.Duration;
 import static com.codeborne.selenide.Selenide.*;
 
 
@@ -75,16 +74,17 @@ public class ElementsTest {
             $("label[for='tree-node-wordFile'] span[class='rct-title']").click();
             $("label[for='tree-node-excelFile'] span[class='rct-title']").click();
         }
-        }
-
-        @DisplayName("Radio Button Test")
-        @Test
-    public void RadioButtonTest() {
-            SelenideLogger.addListener("allure", new AllureSelenide());
-
-            $("svg[viewBox='0 0 448 512']").click();
-            $("#item-2 > svg[viewBox='0 0 1024 1024']").click();
-            $("label[for='yesRadio']").click();
-            $("label[for='impressiveRadio']").click();
-        }
     }
+
+    @DisplayName("Radio Button Test")
+    @Test
+    public void RadioButtonTest() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+
+        $("svg[viewBox='0 0 448 512']").click();
+        $("#item-2 > svg[viewBox='0 0 1024 1024']").click();
+        $("label[for='yesRadio']").click();
+        $("label[for='impressiveRadio']").click();
+    }
+}
+
