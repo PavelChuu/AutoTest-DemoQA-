@@ -74,10 +74,13 @@ public class WebTableTest {
     @Test
     public void Rows() {
         SelenideLogger.addListener("allure", new AllureSelenide());
+
         String[] numbers = {"10", "20", "25", "50", "100", "5"};
         for (String num : numbers) {
+            //Скролл до конца страницы
             Selenide.executeJavaScript("window.scrollTo(0, document.body.scrollHeight)");
             $("select[aria-label='rows per page']").click();
+            // Ищем элемент через селектор "option[value='%s']" на место %s вставляется значение num которое берётся из массива numbers
             $(String.format("option[value='%s']", num)).click();
         }
     }
@@ -86,14 +89,25 @@ public class WebTableTest {
     @Test
     public void turnPage() {
         SelenideLogger.addListener("allure", new AllureSelenide());
-
-        SelenideElement element = $("span[class='-totalPages']");
-        int maxValue;
-        String max = element.getText();
-        maxValue = Integer.parseInt(max);
         Faker faker = new Faker();
+
+        //Узнаём максимальное число страниц и присваиваем это значение element
+        SelenideElement element = $("span[class='-totalPages']");
+        String max = element.getText();
+        //Конвертируем переменную max в int и присваиваем его maxValue
+        int maxValue;
+        maxValue = Integer.parseInt(max);
         $("input[aria-label=\"jump to page\"]").click();
         $("input[aria-label=\"jump to page\"]").val(String.valueOf(faker.number().numberBetween(1, maxValue))).pressEnter();
     }
 
+    @DisplayName("Previous and Next page")
+    @Test
+    public void PrevAndNext() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+
+        $("div[class='-next'] button").click();
+        $("div[class='-previous'] button").click();
+        $("div[class='-next'] button").click();
+    }
 }
