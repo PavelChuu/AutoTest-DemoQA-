@@ -1,13 +1,11 @@
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.After;
 import org.junit.jupiter.api.*;
 import com.github.javafaker.Faker;
 
+import static com.codeborne.selenide.Condition.or;
 import static com.codeborne.selenide.Selenide.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -75,13 +73,20 @@ public class WebTableTest {
         $("span[title=\"Delete\"]").click();
     }
 
+    @Disabled
     @DisplayName("Search")
-    @Test
+    @RepeatedTest(5)
     @Order(4)
     public void search() {
+        String search;
         SelenideLogger.addListener("allure", new AllureSelenide());
+        Faker faker = new Faker();
 
-        
+        SelenideElement parentDiv = $("div[class='rt-tbody']");
+        ElementsCollection childDivs = parentDiv.$$("div[class='rt-tr -odd'], div[class='rt-tr -even']");
+        int childDivCount = childDivs.size();
+        SelenideElement Child = childDivs.get(faker.number().numberBetween(1, childDivCount));
+
     }
 
     @DisplayName("Rows")
@@ -146,4 +151,5 @@ public class WebTableTest {
             $("input[aria-label=\"jump to page\"]").val(String.valueOf(value)).pressEnter();
         }
     }
+
 }

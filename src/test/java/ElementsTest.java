@@ -1,4 +1,5 @@
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.github.javafaker.Faker;
@@ -6,6 +7,8 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.interactions.Actions;
+
 import static com.codeborne.selenide.Selenide.*;
 
 
@@ -85,6 +88,20 @@ public class ElementsTest {
         $("#item-2 > svg[viewBox='0 0 1024 1024']").click();
         $("label[for='yesRadio']").click();
         $("label[for='impressiveRadio']").click();
+    }
+
+    @DisplayName("Buttons Test")
+    @Test
+    public void ButtonsTest() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+
+        $("svg[viewBox='0 0 448 512']").click();
+        $("#item-4 > svg[viewBox='0 0 1024 1024']").click();
+        $("#doubleClickBtn").doubleClick();
+        Actions actions = new Actions(Selenide.webdriver().driver().getWebDriver());
+        var element = $("#rightClickBtn");
+        actions.contextClick(element.getWrappedElement()).perform();
+        $("div[class = 'mt-4']:nth-of-type(3) button[class='btn btn-primary']").click();
     }
 }
 
