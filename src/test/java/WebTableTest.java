@@ -1,13 +1,8 @@
 import com.codeborne.selenide.*;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.After;
 import org.junit.jupiter.api.*;
 import com.github.javafaker.Faker;
-
-import java.util.Random;
-
-import static com.codeborne.selenide.Condition.or;
 import static com.codeborne.selenide.Selenide.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -132,7 +127,7 @@ public class WebTableTest {
     }
 
     @DisplayName("Jump to page")
-    @Test
+    @RepeatedTest(5)
     @Order(8)
     public void jumpPage() {
         SelenideLogger.addListener("allure", new AllureSelenide());

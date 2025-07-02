@@ -2,27 +2,21 @@ import com.codeborne.selenide.*;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.github.javafaker.Faker;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.interactions.Actions;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
-
 public class ElementsTest {
-    @BeforeEach
-    public void setUp() {
-        Configuration.browser = "firefox";
-        Configuration.timeout = 600000;
-        Configuration.holdBrowserOpen = true;
-        open("https://demoqa.com");
-        WebDriverRunner.getWebDriver().manage().window().maximize();
-    }
 
     @DisplayName("Test TextBox")
-    @Test
-    public void TextBoxTest() {
+    @ParameterizedTest
+    @MethodSource("BrowserProvider#provideArgument")
+    void TextBoxTest(String browser) {
+        Configuration.browser = browser;
         //Подключаем Faker
         Faker faker = new Faker();
         //Подключаем Логи Allure
@@ -34,6 +28,8 @@ public class ElementsTest {
         array[2] = faker.address().fullAddress();
         array[3] = faker.address().fullAddress();
 
+        open("https://demoqa.com");
+        WebDriverRunner.getWebDriver().manage().window().maximize();
         //Сам тест
         $("svg[viewBox='0 0 448 512']").click();
         $("#item-0 > svg[viewBox='0 0 1024 1024']").click();
@@ -62,13 +58,17 @@ public class ElementsTest {
         SelenideElement pAddress = $("p[id='permanentAddress']");
         pAddress.shouldBe(visible);
         pAddress.shouldHave(exactText("Permananet Address :" + array[3]));
+        WebDriverRunner.closeWebDriver();
     }
 
-
     @DisplayName("Radio Button Test")
-    @Test
-    public void RadioButtonTest() {
+    @ParameterizedTest
+    @MethodSource("BrowserProvider#provideArgument")
+    void RadioButtonTest(String browser) {
+        Configuration.browser = browser;
         SelenideLogger.addListener("allure", new AllureSelenide());
+        open("https://demoqa.com");
+        WebDriverRunner.getWebDriver().manage().window().maximize();
 
         $("svg[viewBox='0 0 448 512']").click();
         $("#item-2 > svg[viewBox='0 0 1024 1024']").click();
@@ -81,12 +81,17 @@ public class ElementsTest {
         $("label[for='impressiveRadio']").click();
         select.shouldBe(visible);
         select.shouldHave(exactText("Impressive"));
+        WebDriverRunner.closeWebDriver();
     }
 
     @DisplayName("Buttons Test")
-    @Test
-    public void ButtonsTest() {
+    @ParameterizedTest
+    @MethodSource("BrowserProvider#provideArgument")
+    public void ButtonsTest(String browser) {
+        Configuration.browser = browser;
         SelenideLogger.addListener("allure", new AllureSelenide());
+        open("https://demoqa.com");
+        WebDriverRunner.getWebDriver().manage().window().maximize();
 
         $("svg[viewBox='0 0 448 512']").click();
         $("#item-4 > svg[viewBox='0 0 1024 1024']").click();
@@ -101,6 +106,7 @@ public class ElementsTest {
 
         $("div[class = 'mt-4']:nth-of-type(3) button[class='btn btn-primary']").click();
         $("#dynamicClickMessage").should(visible);
+        WebDriverRunner.closeWebDriver();
     }
 }
 

@@ -4,24 +4,23 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class CheckBoxTest {
-    @BeforeEach
-    public void setUp() {
-        Configuration.browser = "firefox";
-        Configuration.timeout = 600000;
-        Configuration.holdBrowserOpen = true;
-        open("https://demoqa.com");
-        WebDriverRunner.getWebDriver().manage().window().maximize();
-    }
 
     @DisplayName("Check Box Test")
-    @Test
-    public void CheckBoxTest() {
+    @ParameterizedTest
+    @MethodSource("BrowserProvider#provideArgument")
+    public void CheckBoxTest(String browser) {
+        Configuration.browser = browser;
         SelenideLogger.addListener("allure", new AllureSelenide());
+
+        open("https://demoqa.com");
+        WebDriverRunner.getWebDriver().manage().window().maximize();
         $("svg[viewBox='0 0 448 512']").click();
         $("#item-1 > svg[viewBox='0 0 1024 1024']").click();
         ElementsCollection elements = $$("span[class='text-success']");
@@ -209,6 +208,6 @@ public class CheckBoxTest {
             elements.shouldBe(CollectionCondition.texts("home", "desktop", "notes", "commands", "documents", "workspace", "react", "angular", "veu", "office", "public", "private", "classified", "general", "downloads", "wordFile", "excelFile"));
             $("label[for='tree-node-home']").click();
             elements.should(CollectionCondition.size(0));
+    WebDriverRunner.closeWebDriver();
     }
-
 }
