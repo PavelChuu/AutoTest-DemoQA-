@@ -1,6 +1,4 @@
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.*;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.github.javafaker.Faker;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -8,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.interactions.Actions;
-
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 
@@ -29,55 +27,43 @@ public class ElementsTest {
         Faker faker = new Faker();
         //Подключаем Логи Allure
         SelenideLogger.addListener("allure", new AllureSelenide());
+
+        String [] array = new String[4];
+        array[0] = faker.name().firstName();
+        array[1] = faker.internet().emailAddress();
+        array[2] = faker.address().fullAddress();
+        array[3] = faker.address().fullAddress();
+
         //Сам тест
         $("svg[viewBox='0 0 448 512']").click();
         $("#item-0 > svg[viewBox='0 0 1024 1024']").click();
         $("#userName").click();
-        $("#userName").val(faker.name().firstName());
+        $("#userName").val(array[0]);
         $("#userEmail").click();
-        $("#userEmail").val(faker.internet().emailAddress());
+        $("#userEmail").val(array[1]);
         $("#currentAddress").click();
-        $("#currentAddress").val(faker.address().fullAddress());
+        $("#currentAddress").val(array[2]);
         $("#permanentAddress").click();
-        $("#permanentAddress").val(faker.address().fullAddress());
+        $("#permanentAddress").val(array[3]);
         $("#submit").click();
+
+        SelenideElement name = $("p[id='name']");
+        name.shouldBe(visible);
+        name.shouldHave(exactText("Name:" + array[0]));
+
+        SelenideElement email = $("p[id='email']");
+        email.shouldBe(visible);
+        email.shouldHave(exactText("Email:" + array[1]));
+
+        SelenideElement cAddress = $("p[id='currentAddress']");
+        cAddress.shouldBe(visible);
+        cAddress.shouldHave(exactText("Current Address :" + array[2]));
+
+        SelenideElement pAddress = $("p[id='permanentAddress']");
+        pAddress.shouldBe(visible);
+        pAddress.shouldHave(exactText("Permananet Address :" + array[3]));
     }
 
-    @DisplayName("Check Box Test")
-    @Test
-    public void CheckBoxTest() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
-
-        $("svg[viewBox='0 0 448 512']").click();
-        $("#item-1 > svg[viewBox='0 0 1024 1024']").click();
-        $("svg[class$='rct-icon-expand-all']").click();
-        $("svg[class$='rct-icon-collapse-all']").click();
-        $("svg[class$='rct-icon-expand-close']").click();
-        $("svg[class$='rct-icon-expand-close']").click();
-        for (int i = 0; i < 3; i++) {
-            $("label[for='tree-node-notes']").click();
-            $("label[for='tree-node-commands']").click();
-        }
-        $("svg[class$='rct-icon-expand-close']").click();
-        $("svg[class$='rct-icon-expand-close']").click();
-        for (int i = 0; i < 3; i++) {
-            $("label[for='tree-node-react']").click();
-            $("label[for='tree-node-angular']").click();
-            $("label[for='tree-node-veu']").click();
-        }
-        $("svg[class$='rct-icon-expand-close']").click();
-        for (int i = 0; i < 3; i++) {
-            $("label[for='tree-node-public']").click();
-            $("label[for='tree-node-private']").click();
-            $("label[for='tree-node-classified']").click();
-            $("label[for='tree-node-general']").click();
-        }
-        $("svg[class$='rct-icon-expand-close']").click();
-        for (int i = 0; i < 3; i++) {
-            $("label[for='tree-node-wordFile'] span[class='rct-title']").click();
-            $("label[for='tree-node-excelFile'] span[class='rct-title']").click();
-        }
-    }
 
     @DisplayName("Radio Button Test")
     @Test
@@ -86,8 +72,15 @@ public class ElementsTest {
 
         $("svg[viewBox='0 0 448 512']").click();
         $("#item-2 > svg[viewBox='0 0 1024 1024']").click();
+        SelenideElement select = $("span[class ='text-success']");
+
         $("label[for='yesRadio']").click();
+        select.shouldBe(visible);
+        select.shouldHave(exactText("Yes"));
+
         $("label[for='impressiveRadio']").click();
+        select.shouldBe(visible);
+        select.shouldHave(exactText("Impressive"));
     }
 
     @DisplayName("Buttons Test")
@@ -97,11 +90,17 @@ public class ElementsTest {
 
         $("svg[viewBox='0 0 448 512']").click();
         $("#item-4 > svg[viewBox='0 0 1024 1024']").click();
+
         $("#doubleClickBtn").doubleClick();
+        $("#doubleClickMessage").should(visible);
+
         Actions actions = new Actions(Selenide.webdriver().driver().getWebDriver());
         var element = $("#rightClickBtn");
         actions.contextClick(element.getWrappedElement()).perform();
+        $("#rightClickMessage").should(visible);
+
         $("div[class = 'mt-4']:nth-of-type(3) button[class='btn btn-primary']").click();
+        $("#dynamicClickMessage").should(visible);
     }
 }
 

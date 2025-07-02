@@ -5,6 +5,8 @@ import org.junit.After;
 import org.junit.jupiter.api.*;
 import com.github.javafaker.Faker;
 
+import java.util.Random;
+
 import static com.codeborne.selenide.Condition.or;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -84,9 +86,6 @@ public class WebTableTest {
 
         SelenideElement parentDiv = $("div[class='rt-tbody']");
         ElementsCollection childDivs = parentDiv.$$("div[class='rt-tr -odd'], div[class='rt-tr -even']");
-        int childDivCount = childDivs.size();
-        SelenideElement Child = childDivs.get(faker.number().numberBetween(1, childDivCount));
-
     }
 
     @DisplayName("Rows")
