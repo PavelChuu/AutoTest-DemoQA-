@@ -12,7 +12,7 @@ public class CheckBoxTest {
 
     @DisplayName("Check Box Test")
     @ParameterizedTest
-    @MethodSource("BrowserProvider#provideArgument")
+    @MethodSource("BrowserSetUp#SetUp")
     public void CheckBoxTest(String browser) {
         Configuration.browser = browser;
         SelenideLogger.addListener("allure", new AllureSelenide());

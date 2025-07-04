@@ -14,7 +14,7 @@ public class ElementsTest {
 
     @DisplayName("Test TextBox")
     @ParameterizedTest
-    @MethodSource("BrowserProvider#provideArgument")
+    @MethodSource("BrowserSetUp#SetUp")
     void TextBoxTest(String browser) {
         Configuration.browser = browser;
         //Подключаем Faker
@@ -63,7 +63,7 @@ public class ElementsTest {
 
     @DisplayName("Radio Button Test")
     @ParameterizedTest
-    @MethodSource("BrowserProvider#provideArgument")
+    @MethodSource("BrowserSetUp#SetUp")
     void RadioButtonTest(String browser) {
         Configuration.browser = browser;
         SelenideLogger.addListener("allure", new AllureSelenide());
@@ -86,7 +86,7 @@ public class ElementsTest {
 
     @DisplayName("Buttons Test")
     @ParameterizedTest
-    @MethodSource("BrowserProvider#provideArgument")
+    @MethodSource("BrowserSetUp#SetUp")
     public void ButtonsTest(String browser) {
         Configuration.browser = browser;
         SelenideLogger.addListener("allure", new AllureSelenide());
