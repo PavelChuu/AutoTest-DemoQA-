@@ -2,6 +2,7 @@
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
+allure-results/
 !**/src/test/**/build/
 
 ### IntelliJ IDEA ###
